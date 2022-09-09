@@ -88,7 +88,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
   List<LatLng> latlong = [
     LatLng(34.034026, 71.428005),
-    LatLng(34.018607723865756, 71.511722709346),
+    LatLng(33.984772, 71.449405),
   ];
 
   static const CameraPosition _kGooglePlex = CameraPosition(
@@ -107,6 +107,7 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
         floatingActionButton: FloatingActionButton(
+
           onPressed: () {
             getCurrentLoaction().then((value) {
               print(
@@ -114,6 +115,7 @@ class _HomeScreenState extends State<HomeScreen> {
             });
           },
           child: Icon(Icons.add),
+          
         ),
         drawer: Drawer(
           child: Column(
