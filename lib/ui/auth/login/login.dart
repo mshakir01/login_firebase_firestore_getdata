@@ -1,6 +1,6 @@
 import 'package:firebase/constant/text_constant.dart';
 import 'package:firebase/constant/text_style.dart';
-import 'package:firebase/ui/sign_up.dart';
+import 'package:firebase/ui/auth/signup/sign_up.dart';
 import 'package:firebase/ui/utils/utils.dart';
 import 'package:firebase/ui/widget/round_button.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -8,8 +8,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-import 'forget_screen/forget_screen.dart';
-import 'home_Screen.dart';
+import '../../home/home_Screen.dart';
+import '../forget_screen/forget_screen.dart';
+
 
 class LoginScreen extends StatefulWidget {
   LoginScreen({Key? key}) : super(key: key);

@@ -1,14 +1,14 @@
 import 'dart:async';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase/ui/login.dart';
 import 'package:firebase/ui/utils/utils.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+
+import '../auth/login/login.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key}) : super(key: key);
@@ -21,35 +21,14 @@ class _HomeScreenState extends State<HomeScreen> {
   String name = "Name Loading";
   String email = "Email Loading";
 
-  @override
-  void initState() {
-    super.initState();
-    getData();
+  final auth = FirebaseAuth.instance;
 
-    for (int i = 0; i < latlong.length; i++) {
-      _markers.add(Marker(
-          markerId: MarkerId(i.toString()),
-          position: latlong[i],
-          infoWindow: InfoWindow(
-            title: "Realy Cool Place",
 
-          ),
-        icon: BitmapDescriptor.defaultMarker,
-      ));
-      setState(() {
-        _polyline.add(Polyline(polylineId: PolylineId('1'),
-            points: latlong,
-          color: Colors.blue
-
-        ));
-      });
-
-    }
-  }
 
   void getData() async {
     User? user = await FirebaseAuth.instance.currentUser;
     print("user${user!.uid.toString()}");
+
     var vari = await FirebaseFirestore.instance
         .collection('UserData')
         .doc(user.uid)
@@ -61,6 +40,31 @@ class _HomeScreenState extends State<HomeScreen> {
     });
   }
 
+  @override
+  void initState() {
+    super.initState();
+    getData();
+
+    for (int i = 0; i < latlong.length; i++) {
+      _markers.add(Marker(
+        markerId: MarkerId(i.toString()),
+        position: latlong[i],
+        infoWindow: InfoWindow(
+          title: "Realy Cool Place",
+
+        ),
+        icon: BitmapDescriptor.defaultMarker,
+      ));
+      setState(() {
+        _polyline.add(Polyline(polylineId: PolylineId('1'),
+            points: latlong,
+            color: Colors.blue
+
+        ));
+      });
+
+    }
+  }
   Future<Position> _getUserCurrentLocation() async {
     await Geolocator.requestPermission()
         .then((value) {})
@@ -71,7 +75,7 @@ class _HomeScreenState extends State<HomeScreen> {
     return await Geolocator.getCurrentPosition();
   }
 
-  final auth = FirebaseAuth.instance;
+
   Completer<GoogleMapController> _controller = Completer();
 
   Future<Position> getCurrentLoaction() async {
@@ -106,17 +110,17 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        floatingActionButton: FloatingActionButton(
-
-          onPressed: () {
-            getCurrentLoaction().then((value) {
-              print(
-                  value.latitude.toString() + "" + value.longitude.toString());
-            });
-          },
-          child: Icon(Icons.add),
-          
-        ),
+        // floatingActionButton: FloatingActionButton(
+        //
+        //   onPressed: () {
+        //     getCurrentLoaction().then((value) {
+        //       print(
+        //           value.latitude.toString() + "" + value.longitude.toString());
+        //     });
+        //   },
+        //   child: Icon(Icons.add),
+        //
+        // ),
         drawer: Drawer(
           child: Column(
             children: [
@@ -160,15 +164,6 @@ class _HomeScreenState extends State<HomeScreen> {
                   Divider(
                     height: 2,
                   ),
-                  InkWell(
-                      onTap: () {
-                        print("hellloword");
-                        getData();
-                      },
-                      child: Text(
-                        "data",
-                        style: TextStyle(color: Colors.black),
-                      )),
                 ],
               )
             ],

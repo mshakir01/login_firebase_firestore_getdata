@@ -1,14 +1,14 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase/ui/home_Screen.dart';
-import 'package:firebase/ui/login.dart';
 import 'package:firebase/ui/utils/utils.dart';
 import 'package:firebase/ui/widget/round_button.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-import '../constant/text_constant.dart';
-import '../constant/text_style.dart';
+import '../../../constant/text_constant.dart';
+import '../../../constant/text_style.dart';
+import '../../home/home_Screen.dart';
+import '../login/login.dart';
 
 class SignupScreen extends StatefulWidget {
   const SignupScreen({Key? key}) : super(key: key);
@@ -40,9 +40,9 @@ class _SignupScreenState extends State<SignupScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Color(0xff181848),
-      appBar: AppBar(
-        title: const Text("Sign Up Form"),
-      ),
+      // appBar: AppBar(
+      //   title: const Text("Sign Up Form"),
+      // ),
       body: Column(
         mainAxisAlignment: MainAxisAlignment.end,
         children: [
@@ -58,10 +58,12 @@ class _SignupScreenState extends State<SignupScreen> {
                       logintext,textAlign: TextAlign.start,
                       style: heading1,
                     ),
+                    SizedBox(height: 5,),
                     Text(
                       wback,
                       style: heading2,
                     ),
+                    SizedBox(height: 5,),
                     Text(
                       lContinue,
                       style: heading3,

@@ -1,10 +1,8 @@
-import 'dart:async';
-
-import 'package:firebase/ui/home_Screen.dart';
-import 'package:firebase_auth/firebase_auth.dart';
+import 'dart:async';import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
-import '../ui/login.dart';
+import '../ui/auth/login/login.dart';
+import '../ui/home/home_Screen.dart';
 
 
  class SplashServices{
