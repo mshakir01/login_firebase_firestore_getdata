@@ -25,7 +25,28 @@ class _HomeScreenState extends State<HomeScreen> {
   void initState() {
     super.initState();
     getData();
+
+    for (int i = 0; i < latlong.length; i++) {
+      _markers.add(Marker(
+          markerId: MarkerId(i.toString()),
+          position: latlong[i],
+          infoWindow: InfoWindow(
+            title: "Realy Cool Place",
+
+          ),
+        icon: BitmapDescriptor.defaultMarker,
+      ));
+      setState(() {
+        _polyline.add(Polyline(polylineId: PolylineId('1'),
+            points: latlong,
+          color: Colors.blue
+
+        ));
+      });
+
+    }
   }
+
   void getData() async {
     User? user = await FirebaseAuth.instance.currentUser;
     print("user${user!.uid.toString()}");
@@ -62,10 +83,16 @@ class _HomeScreenState extends State<HomeScreen> {
     return await Geolocator.getCurrentPosition();
   }
 
-  final List<Marker> _markers = <Marker>[];
+  final Set<Marker> _markers = {};
+  final Set<Polyline> _polyline = {};
+
+  List<LatLng> latlong = [
+    LatLng(34.034026, 71.428005),
+    LatLng(34.018607723865756, 71.511722709346),
+  ];
 
   static const CameraPosition _kGooglePlex = CameraPosition(
-    target: LatLng(33.6844, 73.0479),
+    target: LatLng(34.034026, 71.428005),
     zoom: 14,
   );
 
@@ -108,9 +135,8 @@ class _HomeScreenState extends State<HomeScreen> {
                               backgroundImage: NetworkImage(
                                   "https://image.shutterstock.com/image-photo/portrait-happy-mid-adult-man-260nw-1812937819.jpg"),
                             ),
-                            ),
                           ),
-
+                        ),
                       )
                     ],
                   ),
@@ -122,18 +148,25 @@ class _HomeScreenState extends State<HomeScreen> {
                     leading: const Text("Name "),
                     title: Text(name),
                   ),
-                  Divider(height: 2,),
+                  Divider(
+                    height: 2,
+                  ),
                   ListTile(
                     leading: const Text("Email "),
                     title: Text(email),
                   ),
-                  Divider(height: 2,),
+                  Divider(
+                    height: 2,
+                  ),
                   InkWell(
-                    onTap: (){
-                      print("hellloword");
-                      getData();
-                    },
-                      child: Text("data",style: TextStyle(color: Colors.black),)),
+                      onTap: () {
+                        print("hellloword");
+                        getData();
+                      },
+                      child: Text(
+                        "data",
+                        style: TextStyle(color: Colors.black),
+                      )),
                 ],
               )
             ],
@@ -161,9 +194,11 @@ class _HomeScreenState extends State<HomeScreen> {
           ],
         ),
         body: GoogleMap(
+          markers: _markers,
           mapType: MapType.normal,
           myLocationEnabled: true,
           compassEnabled: false,
+          polylines: _polyline,
           initialCameraPosition: _kGooglePlex,
           onMapCreated: (GoogleMapController controller) {
             _controller.complete(controller);
