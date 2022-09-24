@@ -5,9 +5,10 @@ import '../../constant/color.dart';
 class RoundButton extends StatelessWidget {
   String text;
   final VoidCallback onTap;
+  bool? loading;
 
 
-  RoundButton({Key? key, required this.text,required this.onTap}) : super(key: key);
+  RoundButton({Key? key, required this.text,required this.onTap,this.loading}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
